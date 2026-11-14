@@ -113,12 +113,13 @@ abbrev simple (i : B) : M.Group := PresentedGroup.of i
 
 protected def Generators : Generators M.Group B where
   val := M.simple
-  closure_eq_top := sorry
+  closure_eq_top := PresentedGroup.closure_range_of _
 
 protected def Presentation : Presentation M.Group B where
   toGenerators := M.Generators
   rel := M.relationsSet
   lift_ker_eq_normalClosure := sorry
+
 
 theorem reindex_relationsSet :
     (M.reindex e).relationsSet =
@@ -171,7 +172,8 @@ class IsCoxeterGroup.{u} (W : Type u) [Group W] : Prop where
   nonempty_system : ∃ B : Type u, ∃ M : CoxeterMatrix B, Nonempty (CoxeterSystem M W)
 
 /-- The canonical Coxeter system on the Coxeter group associated to `M`. -/
-def CoxeterMatrix.toCoxeterSystem : CoxeterSystem M M.Group := ⟨.refl _⟩
+def CoxeterMatrix.toCoxeterSystem : CoxeterSystem M M.Group :=
+  ⟨M.Presentation, rfl⟩
 
 end
 
